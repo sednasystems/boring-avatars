@@ -162,7 +162,7 @@ const variants = {
 };
 
 const Playground = () => {
-  const defaultPlaygroundColors = paletteColors[66];
+  const defaultPlaygroundColors = sednaColours;
   const [playgroundColors, setPlaygroundColors] = useState(defaultPlaygroundColors);
 
   const [darkMode, setDarkMode] = useState(false);
