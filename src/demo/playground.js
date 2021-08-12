@@ -7,6 +7,13 @@ import Avatar from '../lib';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const paletteColors = colors;
+const sednaColours = [
+  '#463997', // 70 57 151 purple
+  '#ffbf2e', // 255 191 46 yellow
+  '#00b5c9', // 0 180 201 teal
+  '#f55d2a', // 245 92 42 orange
+  '#e10f8d', // 225 15 140 pink
+];
 
 const Header = styled.header`
   display: grid;
@@ -167,6 +174,10 @@ const Playground = () => {
 
   const filteredColors = [dotColor0, dotColor1, dotColor2, dotColor3, dotColor4];
 
+  const handleSednaColors = () => {
+    setPlaygroundColors(sednaColours);
+  };
+
   const handleRandomColors = () => {
     setPlaygroundColors(paletteColors[getRandomPaletteIndex()]);
   };
@@ -227,6 +238,7 @@ const Playground = () => {
           <ColorDot value={dotColor4} onChange={(color) => setDotColor4(color)} />
         </ColorsSection>
 
+        <Button onClick={() => handleSednaColors()}>SEDNA palette</Button>
         <Button onClick={() => handleRandomColors()}>Random palette</Button>
         <Button onClick={() => setSquare(!isSquare)}>{isSquare ? 'Round' : 'Square'}</Button>
         <SegmentGroup>
