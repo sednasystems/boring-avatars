@@ -7,10 +7,17 @@ import Avatar from '../lib';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const paletteColors = colors;
+const sednaColours = [
+  '#463997', // 70 57 151 purple
+  '#ffbf2e', // 255 191 46 yellow
+  '#00b5c9', // 0 180 201 teal
+  '#f55d2a', // 245 92 42 orange
+  '#e10f8d', // 225 15 140 pink
+];
 
 const Header = styled.header`
   display: grid;
-  grid-template-columns: auto 1fr auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto auto auto;
   padding: var(--pagePadding);
   align-items: center;
   grid-gap: var(--sp-s);
@@ -19,6 +26,12 @@ const Header = styled.header`
 const ColorsSection = styled.div`
   display: inline-grid;
   grid-template-columns: repeat(5, 1fr);
+  max-width: max-content;
+  grid-gap: var(--sp-xs);
+`;
+
+const NamesSection = styled.div`
+  display: inline-grid;
   max-width: max-content;
   grid-gap: var(--sp-xs);
 `;
@@ -152,11 +165,13 @@ const variants = {
   pixel: 'pixel',
   marble: 'marble',
   beam: 'beam',
+  sedna: 'sedna',
 };
 
 const Playground = () => {
-  const defaultPlaygroundColors = paletteColors[66];
+  const defaultPlaygroundColors = sednaColours;
   const [playgroundColors, setPlaygroundColors] = useState(defaultPlaygroundColors);
+  const [names, setNames] = useState(exampleNames);
 
   const [darkMode, setDarkMode] = useState(false);
   const [dotColor0, setDotColor0] = useState(playgroundColors[0]);
@@ -167,8 +182,19 @@ const Playground = () => {
 
   const filteredColors = [dotColor0, dotColor1, dotColor2, dotColor3, dotColor4];
 
+  const handleSednaColors = () => {
+    setPlaygroundColors(sednaColours);
+  };
+
   const handleRandomColors = () => {
     setPlaygroundColors(paletteColors[getRandomPaletteIndex()]);
+  };
+
+  const handleNamesFocus = (event) => event.target.select();
+
+  const onNamesChange = (names, event) => {
+    setNames(names.split(' '));
+    event.target.value = null;
   };
 
   useEffect(() => {
@@ -180,7 +206,7 @@ const Playground = () => {
   }, [playgroundColors]);
 
   const [avatarSize, setAvatarSize] = useState(avatarSizes.medium);
-  const [variant, setVariant] = useState(variants.pixel);
+  const [variant, setVariant] = useState(variants.sedna);
   const [isSquare, setSquare] = useState(false);
 
   return (
@@ -218,7 +244,22 @@ const Playground = () => {
           >
             Bauhaus
           </Segment>
+          <Segment
+            onClick={() => setVariant(variants.sedna)}
+            isSelected={variant === variants.sedna}
+          >
+            SEDNA
+          </Segment>
         </SegmentGroup>
+
+        <NamesSection>
+          <Input
+            placeholder="Paste list of names"
+            onChange={(e) => onNamesChange(e.target.value, e)}
+            onFocus={(e) => handleNamesFocus(e)}
+          />
+        </NamesSection>
+
         <ColorsSection>
           <ColorDot value={dotColor0} onChange={(color) => setDotColor0(color)} />
           <ColorDot value={dotColor1} onChange={(color) => setDotColor1(color)} />
@@ -227,6 +268,7 @@ const Playground = () => {
           <ColorDot value={dotColor4} onChange={(color) => setDotColor4(color)} />
         </ColorsSection>
 
+        <Button onClick={() => handleSednaColors()}>SEDNA palette</Button>
         <Button onClick={() => handleRandomColors()}>Random palette</Button>
         <Button onClick={() => setSquare(!isSquare)}>{isSquare ? 'Round' : 'Square'}</Button>
         <SegmentGroup>
@@ -251,9 +293,9 @@ const Playground = () => {
         />
       </Header>
       <AvatarsGrid>
-        {exampleNames.map((exampleName, name) => (
+        {names.map((exampleName) => (
           <AvatarWrapper
-            key={name}
+            key={exampleName}
             size={avatarSize}
             square={isSquare}
             name={exampleName}
