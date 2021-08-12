@@ -6,8 +6,9 @@ import AvatarPixel from './avatar-pixel';
 import AvatarBeam from './avatar-beam';
 import AvatarSunset from './avatar-sunset';
 import AvatarMarble from './avatar-marble';
+import AvatarSedna from './avatar-sedna';
 
-const variants = ['pixel', 'bauhaus', 'ring', 'beam', 'sunset', 'marble'];
+const variants = ['pixel', 'bauhaus', 'ring', 'beam', 'sunset', 'marble', 'sedna'];
 const deprecatedVariants = { geometric: 'beam', abstract: 'bauhaus' };
 
 const Avatar = ({
@@ -35,6 +36,7 @@ const Avatar = ({
     beam: <AvatarBeam {...avatarProps} />,
     sunset: <AvatarSunset {...avatarProps} />,
     marble: <AvatarMarble {...avatarProps} />,
+    sedna: <AvatarSedna {...avatarProps} />,
   };
   return avatars[checkedVariant()];
 };

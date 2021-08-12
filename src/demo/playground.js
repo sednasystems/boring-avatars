@@ -159,6 +159,7 @@ const variants = {
   pixel: 'pixel',
   marble: 'marble',
   beam: 'beam',
+  sedna: 'sedna',
 };
 
 const Playground = () => {
@@ -228,6 +229,12 @@ const Playground = () => {
             isSelected={variant === variants.bauhaus}
           >
             Bauhaus
+          </Segment>
+          <Segment
+            onClick={() => setVariant(variants.sedna)}
+            isSelected={variant === variants.sedna}
+          >
+            SEDNA
           </Segment>
         </SegmentGroup>
         <ColorsSection>
