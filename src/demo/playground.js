@@ -17,7 +17,7 @@ const sednaColours = [
 
 const Header = styled.header`
   display: grid;
-  grid-template-columns: auto 1fr auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto auto auto;
   padding: var(--pagePadding);
   align-items: center;
   grid-gap: var(--sp-s);
@@ -26,6 +26,12 @@ const Header = styled.header`
 const ColorsSection = styled.div`
   display: inline-grid;
   grid-template-columns: repeat(5, 1fr);
+  max-width: max-content;
+  grid-gap: var(--sp-xs);
+`;
+
+const NamesSection = styled.div`
+  display: inline-grid;
   max-width: max-content;
   grid-gap: var(--sp-xs);
 `;
@@ -165,6 +171,7 @@ const variants = {
 const Playground = () => {
   const defaultPlaygroundColors = sednaColours;
   const [playgroundColors, setPlaygroundColors] = useState(defaultPlaygroundColors);
+  const [names, setNames] = useState(exampleNames);
 
   const [darkMode, setDarkMode] = useState(false);
   const [dotColor0, setDotColor0] = useState(playgroundColors[0]);
@@ -181,6 +188,13 @@ const Playground = () => {
 
   const handleRandomColors = () => {
     setPlaygroundColors(paletteColors[getRandomPaletteIndex()]);
+  };
+
+  const handleNamesFocus = (event) => event.target.select();
+
+  const onNamesChange = (names, event) => {
+    setNames(names.split(' '));
+    event.target.value = null;
   };
 
   useEffect(() => {
@@ -237,6 +251,15 @@ const Playground = () => {
             SEDNA
           </Segment>
         </SegmentGroup>
+
+        <NamesSection>
+          <Input
+            placeholder="Paste list of names"
+            onChange={(e) => onNamesChange(e.target.value, e)}
+            onFocus={(e) => handleNamesFocus(e)}
+          />
+        </NamesSection>
+
         <ColorsSection>
           <ColorDot value={dotColor0} onChange={(color) => setDotColor0(color)} />
           <ColorDot value={dotColor1} onChange={(color) => setDotColor1(color)} />
@@ -270,9 +293,9 @@ const Playground = () => {
         />
       </Header>
       <AvatarsGrid>
-        {exampleNames.map((exampleName, name) => (
+        {names.map((exampleName) => (
           <AvatarWrapper
-            key={name}
+            key={exampleName}
             size={avatarSize}
             square={isSquare}
             name={exampleName}
